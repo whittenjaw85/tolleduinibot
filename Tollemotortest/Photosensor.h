@@ -10,6 +10,6 @@ public:
     uint16_t read();
 
 private:
-    uint8_t pin;
+    uint8_t _pin;
 };
 #endif
