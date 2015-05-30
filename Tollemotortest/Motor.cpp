@@ -5,9 +5,6 @@ Motor::Motor(uint8_t dirPin, uint8_t stepPin)
     _dirPin = dirPin;
     _stepPin = stepPin;
     
-    // if making a motor class, does it make sense to have this here?
-    
-    
     pinMode(_dirPin, OUTPUT);
     pinMode(_stepPin, OUTPUT);
 }
