@@ -3,9 +3,9 @@
 
 
 Photosensor::Photosensor(uint8_t pin){
-    this->pin = pin;
+    _pin = pin;
 }
 
 uint16_t Photosensor::read(){
-    return ((uint16_t)(analogRead(this->pin)));
+    return ((uint16_t)(analogRead(_pin)));
 }
