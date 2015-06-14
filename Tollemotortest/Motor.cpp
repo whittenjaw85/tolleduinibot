@@ -37,7 +37,7 @@ void Motor::setSpeedAndDir(uint8_t speed, uint8_t dir)
             break;
         case REVDIR:
             digitalWrite(_dirPin, REVDIR);
-            analogWrite(_stepPin, REVBASE-speed);
+            analogWrite(_stepPin, REVBASE+speed);
             break;
         default:
             break;
