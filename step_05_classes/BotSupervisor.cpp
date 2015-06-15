@@ -1,22 +1,23 @@
-#include "MotorControlLaw.h"
-#include "Arduino.h"
+#include "BotSupervisor.h"
 
-MotorControlLaw::MotorControlLaw(Motor leftMotor, 
-  Motor rightMotor, Photosensor leftSensor, 
-  Photosensor rightSensor) : 
-  _leftMotor(leftMotor), _rightMotor(rightMotor),
-  _leftSensor(leftSensor), _rightSensor(rightSensor)
+BotSupervisor::BotSupervisor()
 {
     // slow PWM frequency down
     TCCR2B = TCCR2B & 0b1111100 | 0x02;
+    
+    _leftMotor  = Motor(MOTOR1DIR, MOTOR1STEP);
+    _rightMotor = Motor(MOTOR2DIR, MOTOR2STEP);
+    
+    _leftSensor = Photosensor(LEFT_PHOTOSENSOR);
+    _rightSensor = Photosensor(RIGHT_PHOTOSENSOR);
 }
 
-void MotorControlLaw::stop(){
+void BotSupervisor::stop(){
     _leftMotor.stop();
     _rightMotor.stop();
 }
 
-void MotorControlLaw::update() {
+void BotSupervisor::update() {
     // Read analog values to determine which 
     // is bigger
     if (_rightSensor.read() > _leftSensor.read()){

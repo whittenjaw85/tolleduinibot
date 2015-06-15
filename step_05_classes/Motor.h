@@ -17,8 +17,8 @@ public:
     // speeds range between -128 and 127
     void forward(uint8_t speed);
     void reverse(uint8_t speed);
-    void setSpeedAndDir(uint8_t speed, uint8_t dir);
 private:
+    void setSpeedAndDir(uint8_t speed, uint8_t dir);
     uint8_t _dirPin;
     uint8_t _stepPin;
 };

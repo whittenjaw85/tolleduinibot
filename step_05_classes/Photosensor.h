@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+#include "Arduino.h"
+
 class Photosensor{
 public:
     Photosensor(uint8_t pin);

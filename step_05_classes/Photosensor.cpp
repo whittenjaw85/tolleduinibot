@@ -1,6 +1,4 @@
 #include "Photosensor.h"
-#include "Arduino.h"
-
 
 Photosensor::Photosensor(uint8_t pin){
     _pin = pin;
