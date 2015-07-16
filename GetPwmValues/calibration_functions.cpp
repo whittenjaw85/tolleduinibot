@@ -4,7 +4,7 @@ void calibrateMinForward(struct Motor motor)
 {
     uint8_t hard_stop = FWD_OFF;
     uint8_t stopped = FWD_OFF;
-    uint8_t distance = 255;
+    uint8_t distance = 70;
     uint8_t last_yes = 0;
     int valid_responses[4] = {'y','Y','n','N'};
     int response_array_length = 4;
@@ -18,9 +18,9 @@ void calibrateMinForward(struct Motor motor)
         delay(1000);
         analogWrite(motor.step_pin, hard_stop);
         response = prompt("Did motor move? [Y(es)/N(o)]: ",valid_responses, response_array_length);
-        if (response == 'y' || response == 'Y') {
+        if ((response == 'y') || (response == 'Y')) {
             last_yes = pwm_value;
-        } else if (response == 'n' || response == 'N') {
+        } else if ((response == 'n') || (response == 'N')) {
             stopped = pwm_value;
         }
         delay(1000);
@@ -32,22 +32,28 @@ void calibrateMinForward(struct Motor motor)
 
 void calibrateMaxForward(struct Motor motor)
 {
-    int i;
+    uint8_t i;
     digitalWrite(motor.dir_pin, FWDDIR);
-    for (i = 128; i < 256; i++) {
+    for (i = 35; i < 256; i++) {
       Serial.print("Pwm value: ");
       Serial.println(i);
       analogWrite(motor.step_pin, i);
+      if(Serial.available() > 0){
+         if(Serial.read() == 'q')
+           break; 
+      }
       delay(1500);
     }
-    analogWrite(motor.step_pin, 255);
+
+    digitalWrite(motor.dir_pin, 0);
+    analogWrite(motor.step_pin, 0);
 }
 
 void calibrateMinReverse(struct Motor motor)
 {
     uint8_t hard_stop = REV_OFF;
     uint8_t stopped = REV_OFF;
-    uint8_t distance = 255;
+    uint8_t distance = 70;
     uint8_t last_yes = 0;
     int valid_responses[4] = {'y','Y','n','N'};
     int response_array_length = 4;
@@ -61,26 +67,32 @@ void calibrateMinReverse(struct Motor motor)
         delay(1000);
         analogWrite(motor.step_pin, hard_stop);
         response = prompt("Did motor move? [Y(es)/N(o)]: ",valid_responses, response_array_length);
-        if (response == 'y' || response == 'Y') {
+        if ((response == 'y') || (response == 'Y')) {
             last_yes = pwm_value;
-        } else if (response == 'n' || response == 'N') {
+        } else if ((response == 'n') || (response == 'N')) {
             stopped = pwm_value;
         }
     } while (distance > 0);
     
     Serial.print("Pwm value: ");
-    Serial.println(last_yes);
+    Serial.println(255-last_yes);
 }
 
 void calibrateMaxReverse(struct Motor motor)
 {
-    int i;
+    uint8_t i;
     digitalWrite(motor.dir_pin, REVDIR);
-    for (i = 128; i > -1; i--) {
+    for (i = (255-35); i > -1; i--) {
       Serial.print("Pwm value: ");
-      Serial.println(i);
+      Serial.println(255-i);
       analogWrite(motor.step_pin, i);
+      if(Serial.available() > 0){
+         if(Serial.read() == 'q')
+           break; 
+      }
       delay(1500);
     }
+    
+    digitalWrite(motor.dir_pin, 0);
     analogWrite(motor.step_pin, 0);
 }

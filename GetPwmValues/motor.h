@@ -5,10 +5,10 @@
 #include "Arduino.h"
 
 // define some constants to represent pins
-#define LEFTMOTORDIR 12
-#define RIGHTMOTORDIR 13
-#define LEFTMOTORPWR 9
-#define RIGHTMOTORPWR 10
+#define LEFTMOTORDIR 13
+#define RIGHTMOTORDIR 12
+#define LEFTMOTORPWR 10
+#define RIGHTMOTORPWR 9
 
 #define FWD_FULL_ON 255
 #define FWD_OFF 0
