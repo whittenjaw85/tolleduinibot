@@ -1,8 +1,8 @@
 #include "Motor.h"
-#include "Photosensor.h"
+#include "IRSensor.h"
 
-#define LEFTSENSOR A0
-#define RIGHTSENSOR A1 
+#define LEFTSENSOR 3
+#define RIGHTSENSOR 2 
 
 #define LEFTMOTORDIR 12
 #define LEFTMOTORSTEP 9 //PWM
@@ -12,8 +12,8 @@
 uint16_t leftsensor_base;
 uint16_t rightsensor_base;
 
-Photosensor ps_left = Photosensor(LEFTSENSOR);
-Photosensor ps_right = Photosensor(RIGHTSENSOR);
+IRSensor ps_left = IRSensor(LEFTSENSOR);
+IRSensor ps_right = IRSensor(RIGHTSENSOR);
 
 Motor motor_right = Motor(RIGHTMOTORDIR, RIGHTMOTORSTEP);
 Motor motor_left = Motor(LEFTMOTORDIR, LEFTMOTORSTEP);
@@ -28,18 +28,18 @@ void setup(){
     pinMode(RIGHTMOTORDIR, OUTPUT);
     pinMode(RIGHTMOTORSTEP, OUTPUT);
 
-    leftsensor_base = ps_left.read() + 50;
-    rightsensor_base = ps_right.read() + 50;
+    leftsensor_base = ps_left.readSensor()+200;
+    rightsensor_base = ps_right.readSensor()+200;
 }
 
 void loop(){
-    if( ps_right.read() > rightsensor_base){
+    if( ps_right.readSensor() > rightsensor_base){
         motor_right.reverse(20);
     }else{
         motor_right.forward(10);
     }
 
-    if(ps_left.read() > leftsensor_base){
+    if(ps_left.readSensor() > leftsensor_base){
         motor_left.reverse(20);
     }else{
         motor_left.forward(10);
